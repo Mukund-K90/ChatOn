@@ -1,6 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
@@ -8,7 +6,8 @@ const { connectDb } = require('./src/config/db');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
+app.use(cors())
 // MongoDB Connection
 connectDb();
 
@@ -17,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'src/views'));
+app.set('views', path.join(__dirname, 'src/views/pages'));
 
-//set cookie-session for flash
+// Set cookie-session for flash
 app.use(cookieParser('NotSoSecret'));
 app.use(session({
     secret: 'something',
@@ -29,28 +28,17 @@ app.use(session({
 }));
 app.use(flash());
 
-// Routes
-app.get('/login', (req, res) => {
-    const messages = req.flash();
-    const userData = messages.userData ? messages.userData[0] : {};
+// Define common routes
+const viewsRoutes = require('./src/routes/common/viewsRoutes');
+app.use('/', viewsRoutes);
 
-    return res.render('pages/login', { messages, userData }); 
-});
-
-
-app.get('/signUp', (req, res) => {
-    const messages = req.flash();
-    const userData = messages.userData ? messages.userData[0] : {};
-
-    return res.render('pages/signup', { messages, userData }); 
-});
-
-//define user route
+// Define user route
 const userRoute = require('./src/routes/user/userRoutes');
+const { CONFIG } = require('./src/config/config');
 app.use('/v1/user', userRoute);
 
-
 // Start server
-app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
+const PORT = CONFIG.port || 8080;
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });

@@ -2,6 +2,7 @@ module.exports.ERROR_MESSAGE = {
     // Authentication & Authorization Errors
     UNAUTHORIZED_USER: "Access denied. Unauthorized user.",
     CONFIRM_PASSWORD_MATCH: "Confirm Passwords does't match.",
+    TOKEN_SAVE_FAILED: "Failed to save token.",
     SESSION_EXPIRED: "Your session has expired. Please login again.",
     TOKEN_SAVE_FAILED: "Failed to save token.",
     TOKEN_INVALID: "Invalid token.",

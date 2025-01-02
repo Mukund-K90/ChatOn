@@ -1,3 +1,4 @@
+const Token = require('../../../model/authToken');
 const User = require('../../../model/user/user');
 
 
@@ -19,4 +20,22 @@ module.exports.addUser = async (userData) => {
     } catch (error) {
         throw error;
     }
+}
+
+
+//generate new Token
+module.exports.generateToken = async (id, token) => {
+    const storedToken = new Token({
+        userId: id,
+        token: token,
+    });
+    storedToken.save();
+    return storedToken;
+}
+
+//update Token
+module.exports.updateToken = async (id, token) => {
+    const updateToken = await Token.findOneAndUpdate({ userId: id }, { token }, { new: true });
+    updateToken.save();
+    return updateToken;
 }

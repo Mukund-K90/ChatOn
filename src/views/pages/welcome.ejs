@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - ChatOn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .welcome-container {
+            text-align: center;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Welcome to ChatOn!</h1>
+        <p>We are glad to have you here.</p>
+        <br>
+        <p>Please Wait....</p>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 3000); 
+    </script>
+</body>
+</html>

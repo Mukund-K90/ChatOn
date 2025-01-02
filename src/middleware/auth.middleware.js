@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const Token = require('../model/token.model');
-const Admin = require('../model/admin.model');
+const Token = require('../model/authToken');
+const User = require('../model/user/user');
 const { errorResponse } = require('../utils/apiResponse');
-const {CONFIG} = require('../config/config');
+const { CONFIG } = require('../config/config');
+
 const authentication = async (req, res, next) => {
     try {
         const token = req.headers["authorization"];
@@ -20,20 +21,20 @@ const authentication = async (req, res, next) => {
         // Check if the token is expired
         const currentTime = Math.floor(Date.now() / 1000);
         //find the token
-        const adminToken = await Token.findOne({ userId: decoded.userId, token: token1 });
-        if (!adminToken) {
+        const userToken = await Token.findOne({ userId: decoded.userId, token: token1 });
+        if (!userToken) {
             return errorResponse(req, res, 401, "Invalid token");
         }
         if (decoded.exp < currentTime) {
             return errorResponse(req, res, 400, "Token has expired");
         }
         // Find the user from the decoded token's userId
-        const admin = await Admin.findById(decoded.userId);
-        if (!admin) {
+        const user = await User.findById(decoded.userId);
+        if (!user) {
             return errorResponse(req, res, 401, "Permission denied");
         }
         // If all checks pass, move to the next middleware
-        req.user = admin; // Store user info in the request for further use
+        req.user = user; // Store user info in the request for further use
         next();
     } catch (error) {
         console.log(error);
