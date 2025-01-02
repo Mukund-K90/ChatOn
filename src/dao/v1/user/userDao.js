@@ -1,5 +1,5 @@
 const Token = require('../../../model/authToken');
-const User = require('../../../model/user/user');
+const User = require('../../../model/user');
 
 
 //get user by email
@@ -7,6 +7,16 @@ module.exports.getUserByMobile = async (mobile) => {
     try {
         return await User.findOne({ mobile: mobile });
     } catch (error) {
+        throw error;
+    }
+}
+
+//get user by id
+module.exports.getUserById = async (id) => {
+    try {
+        return await User.findById(id);
+    }
+    catch (error) {
         throw error;
     }
 }

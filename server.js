@@ -7,12 +7,15 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { CONFIG } = require('./src/config/config');
+
 app.use(cors())
 // MongoDB Connection
 connectDb();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
 
 app.set('view engine', 'ejs');
@@ -34,8 +37,11 @@ app.use('/', viewsRoutes);
 
 // Define user route
 const userRoute = require('./src/routes/user/userRoutes');
-const { CONFIG } = require('./src/config/config');
 app.use('/v1/user', userRoute);
+
+//Define Chat Route
+const chatRoute = require('./src/routes/chat/chatRoutes');
+app.use('/v1/chat', chatRoute);
 
 // Start server
 const PORT = CONFIG.port || 8080;

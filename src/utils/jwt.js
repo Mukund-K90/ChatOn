@@ -10,7 +10,7 @@ const createUserSession = async function (user) {
 const generateJWT = async function (value) {
     const payload = {
         userId: value._id,
-        email: value.email
+        mobile: value.mobile
     };
 
     return jwt.sign(payload, CONFIG.jwtSecret, { expiresIn: CONFIG.tokenExp });

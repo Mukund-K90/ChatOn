@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const Token = require('../model/authToken');
-const User = require('../model/user/user');
+const User = require('../model/user');
 const { errorResponse } = require('../utils/apiResponse');
 const { CONFIG } = require('../config/config');
 
